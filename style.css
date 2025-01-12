@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0f0f2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffffff;
+}
+
+.container {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  background-color: #121231;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-section {
+  flex: 1;
+  background-color: #0f0f2d;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.welcome-section h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.welcome-section p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.login-section {
+  flex: 1;
+  background-color: #1c1c3a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-section h2 {
+  font-size: 20px;
+  color: #00d4ff;
+  margin-bottom: 30px;
+}
+
+.input-box {
+  margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #00d4ff;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-box input::placeholder {
+  color: #ccc;
+}
+
+.input-box span {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #00d4ff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #00d4ff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #007acc;
+}
+
+.links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.links a {
+  color: #00d4ff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
