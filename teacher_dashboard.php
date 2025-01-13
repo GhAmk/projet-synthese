@@ -1,4 +1,3 @@
-//teacher_dashboard.php
 <?php
 session_start();
 
