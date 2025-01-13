@@ -19,8 +19,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'student') {
 <body>
     <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['name']); ?> !</h1>
     <ul>
-        <li><a href="view_exams.php">Voir les Examens</a></li>
-    </ul>
+    <li><a href="view_exams.php">Voir les Examens</a></li>
+</ul>
     <a href="logout.php">Se Déconnecter</a>
 </body>
 </html>
