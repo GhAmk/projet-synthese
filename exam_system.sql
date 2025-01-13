@@ -16,6 +16,11 @@ CREATE TABLE exams (
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    duration INT NOT NULL,
+    attempts INT NOT NULL,
+ total_points INT NOT NULL,
+ start_date DATETIME NOT NULL,
+ end_date DATETIME NOT NULL,
     FOREIGN KEY (teacher_id) REFERENCES users(id)
 );
 CREATE TABLE questions (
@@ -52,6 +57,11 @@ CREATE TABLE exam_students (
     FOREIGN KEY (exam_id) REFERENCES exams(id),
     FOREIGN KEY (student_id) REFERENCES users(id)
 );
+
+INSERT INTO exams (title, description, teacher_id, start_time, end_time,
+ duration, attempts, total_points, start_date, end_date)
+VALUES ('Test Exam', 'Just a test', 1, '2025-01-01 08:00:00', 
+'2025-01-01 10:00:00', 60, 1, 100, '2025-01-01 08:00:00', '2025-01-01 10:00:00');
 INSERT INTO users (name, email, password, role) VALUES
 ('Teacher One', 'teacher1@example.com', 'teacher123', 'teacher'),
 ('Student One', 'student1@example.com', 'student123', 'student');
