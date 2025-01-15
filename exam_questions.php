@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 $exam_id = $_GET['exam_id'];
 $student_id = $_SESSION['user_id'];
 
-// التحقق من وقت الامتحان
+
 $attempt_query = "SELECT * FROM exam_students 
                  WHERE exam_id = ? AND student_id = ? 
                  ORDER BY start_time DESC LIMIT 1";
@@ -25,7 +25,6 @@ $attempt_stmt->execute();
 $attempt_result = $attempt_stmt->get_result();
 $attempt = $attempt_result->fetch_assoc();
 
-// جلب الأسئلة مع خياراتها
 $questions_query = "SELECT q.*, c.choice_text, c.id as choice_id, c.is_correct 
                    FROM questions q 
                    LEFT JOIN choices c ON q.id = c.question_id 
@@ -36,7 +35,7 @@ $questions_stmt->bind_param("i", $exam_id);
 $questions_stmt->execute();
 $questions_result = $questions_stmt->get_result();
 
-// تنظيم الأسئلة وخياراتها
+
 $questions = [];
 while ($row = $questions_result->fetch_assoc()) {
     $question_id = $row['id'];
@@ -84,7 +83,7 @@ while ($row = $questions_result->fetch_assoc()) {
                                 <p class="lead"><?php echo htmlspecialchars($question['question_text']); ?></p>
                                 
                                 <?php if ($question['question_type'] === 'qcm'): ?>
-                                    <!-- أسئلة QCM -->
+                                  
                                     <?php foreach ($question['choices'] as $choice): ?>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" 
@@ -98,7 +97,7 @@ while ($row = $questions_result->fetch_assoc()) {
                                         </div>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <!-- أسئلة مفتوحة -->
+                                  
                                     <textarea class="form-control" 
                                               name="answers[<?php echo $question['id']; ?>]" 
                                               rows="3" 
