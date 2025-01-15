@@ -1,4 +1,4 @@
-# Exam Management System
+# Exam Management System 
 
 A modern, secure web application for managing online examinations, featuring an elegant dark theme UI for the login system and separate dashboards for teachers and students.
 
