@@ -1,4 +1,3 @@
-view_exams.php
 <?php
 session_start();
 
