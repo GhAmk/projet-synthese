@@ -1,4 +1,75 @@
+<?php
+// Démarrer la session
+session_start();
 
+// Vérifier si l'utilisateur est connecté et est un enseignant
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'teacher') {
+    header("Location: login.php"); // Rediriger vers la page de login
+    exit();
+}
+
+// Connexion à la base de données
+$conn = new mysqli("localhost", "root", "", "exam_system");
+
+if ($conn->connect_error) {
+    die("Erreur de connexion : " . $conn->connect_error);
+}
+
+// Si le formulaire est soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['title'];
+    $description = $_POST['description'] ?? '';
+    $duration = $_POST['duration'];
+    $attempts = $_POST['attempts'];
+    $total_points = $_POST['total_points'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $teacher_id = $_SESSION['user_id'];
+
+    // Insertion de l'examen dans la base de données
+    $stmt = $conn->prepare("INSERT INTO exams (title, description, teacher_id, start_time, end_time, duration, attempts, total_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssissiii", $title, $description, $teacher_id, $start_date, $end_date, $duration, $attempts, $total_points);
+
+    if ($stmt->execute()) {
+        // Récupérer l'ID de l'examen créé
+        $exam_id = $stmt->insert_id;
+
+        // Insérer les questions
+        if (!empty($_POST['questions'])) {
+            $questions = $_POST['questions'];
+            $question_points = $_POST['question_points'];
+            $question_types = $_POST['question_type'];
+
+            for ($i = 0; $i < count($questions); $i++) {
+                $stmt_question = $conn->prepare("INSERT INTO questions (exam_id, question_text, question_type) VALUES (?, ?, ?)");
+                $stmt_question->bind_param("iss", $exam_id, $questions[$i], $question_types[$i]);
+                $stmt_question->execute();
+                $question_id = $stmt_question->insert_id;
+
+                // Si c'est un QCM, insérer les options
+                if ($question_types[$i] === 'qcm' && !empty($_POST['options'][$i]['text'])) {
+                    $options = $_POST['options'][$i]['text'];
+                    $correct = $_POST['options'][$i]['correct'];
+
+                    for ($j = 0; $j < count($options); $j++) {
+                        $is_correct = isset($correct[$j]) ? 1 : 0;
+                        $stmt_option = $conn->prepare("INSERT INTO choices (question_id, choice_text, is_correct) VALUES (?, ?, ?)");
+                        $stmt_option->bind_param("isi", $question_id, $options[$j], $is_correct);
+                        $stmt_option->execute();
+                    }
+                }
+            }
+        }
+
+        // Rediriger vers la page des examens
+        header("Location: Teacher_dashboard.php");
+        exit();
+    } else {
+        $error = "Erreur lors de la création de l'examen.";
+    }
+}
+?>
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
